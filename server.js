@@ -135,7 +135,7 @@ app.post('/send-verification', async (req, res) => {
         } else {
             session = new Session({ email, token, verified: false, sessionId });
             await session.save();
-            const verificationLink = `http://localhost:3000/verify-email?token=${token}`;
+            const verificationLink = `https://api.easthma.ca/verify-email?token=${token}`;
 
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
@@ -146,7 +146,7 @@ app.post('/send-verification', async (req, res) => {
                 <p> Thank you using the Electronic Asthma Management System learning activity. To verify your email and proceed with completing your pre-test, please click on the link below: </p>
                 <a href="${verificationLink}">Verify Email</a> <br> <br>
                 
-                <p>After completing the pre-test, we recommend reviewing the <a href="http://localhost:8080/mp_instructions.html#go1">linked articles</a> and interacting with the eAMS on a minimum of 5 patients before completing the <a href="http://localhost:8080/mp_instructions.html#go2">post-test</a> and evaluation form. You can earn up to 6 credits for a single application (estimated 2 hours, at 3 credits/hour), up to a maximum of 72 credits per year (e.g. if you repeat the activity monthly). You can learn more about this on our <a href="http://localhost:8080/mainpro">website</a>. </p> <br>
+                <p>After completing the pre-test, we recommend reviewing the <a href="https://easthma.ca/mp_instructions#go1">linked articles</a> and interacting with the eAMS on a minimum of 5 patients before completing the <a href="https://easthma.ca/mp_instructions#go2">post-test</a> and evaluation form. You can earn up to 6 credits for a single application (estimated 2 hours, at 3 credits/hour), up to a maximum of 72 credits per year (e.g. if you repeat the activity monthly). You can learn more about this on our <a href="https://easthma.ca/mainpro">website</a>. </p> <br>
     
                 <p>If you have any questions or need any assistance, please let us know. <p> <br>
     
