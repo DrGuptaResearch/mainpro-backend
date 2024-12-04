@@ -141,14 +141,14 @@ app.post('/send-verification', async (req, res) => {
                 from: process.env.EMAIL_USER,
                 to: email,
                 subject: 'Please Verify Your Email - CFP Mainpro+ Credits for The Electronic Asthma Management System (eAMS)',
-                html: `<p>Hello,</p> <br>
+                html: `<p>Hello,</p>
     
                 <p> Thank you using the Electronic Asthma Management System learning activity. To verify your email and proceed with completing your pre-test, please click on the link below: </p>
-                <a href="${verificationLink}">Verify Email</a> <br> <br>
+                <a href="${verificationLink}">Verify Email</a> <br>
                 
-                <p>After completing the pre-test, we recommend reviewing the <a href="https://easthma.ca/mp_instructions#go1">linked articles</a> and interacting with the eAMS on a minimum of 5 patients before completing the <a href="https://easthma.ca/mp_instructions#go2">post-test</a> and evaluation form. You can earn up to 6 credits for a single application (estimated 2 hours, at 3 credits/hour), up to a maximum of 72 credits per year (e.g. if you repeat the activity monthly). You can learn more about this on our <a href="https://easthma.ca/mainpro">website</a>. </p> <br>
+                <p>After completing the pre-test, we recommend reviewing the <a href="https://easthma.ca/mp_instructions#go1">linked articles</a> and interacting with the eAMS on a minimum of 5 patients before completing the <a href="https://easthma.ca/mp_instructions#go2">post-test</a> and evaluation form. You can earn up to 6 credits for a single application (estimated 2 hours, at 3 credits/hour), up to a maximum of 72 credits per year (e.g. if you repeat the activity monthly). You can learn more about this on our <a href="https://easthma.ca/mainpro">website</a>. </p>
     
-                <p>If you have any questions or need any assistance, please let us know. <p> <br>
+                <p>If you have any questions or need any assistance, please let us know. <p>
     
                 <p>Kind regards,</p>
                 <p>eAMS Support Team</p>
