@@ -372,6 +372,9 @@ app.get('/generate-certificate', async (req, res) => {
         const imageX = (pageWidth - imageWidth) / 2; 
         const imageY = 30;
 
+        const date = new Date();
+        const formattedDate = `${date.toLocaleString('en-US', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
+
         doc.image(imagePath, imageX, imageY, { width: imageWidth, height: imageHeight });
 
         doc.moveDown(5);
@@ -419,7 +422,7 @@ app.get('/generate-certificate', async (req, res) => {
 
         doc
             .fontSize(15)
-            .text(`Date: ${new Date().toLocaleDateString()}`, { align: 'center' });
+            .text(`Date: ${formattedDate}`, { align: 'center' });
 
         doc
             .fontSize(15)
