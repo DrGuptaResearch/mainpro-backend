@@ -438,7 +438,7 @@ app.get('/generate-certificate', async (req, res) => {
         doc
             .font('Helvetica')
             .fontSize(13)
-            .text(`This 3 credit per hour self-learning activity has been certified by the College of Family Physicians of Canada for up to 72 Mainpro+ certified credits.`, { align: 'center', bold: true })
+            .text(`This 3-credit-per-hour activity has been certified by the College of Family Physicians of Canada for up to 72 Mainpro+® Certified Activity credits.`, { align: 'center', bold: true })
             .moveDown(3)
 
         doc
