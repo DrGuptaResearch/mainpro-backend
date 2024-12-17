@@ -18,8 +18,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Handle preflight OPTIONS requests
 app.options('*', cors(corsOptions));
 
 // User Schema
@@ -149,6 +147,7 @@ app.post('/send-verification', async (req, res) => {
             session = new Session({ email, token, verified: false, sessionId });
             await session.save();
             const verificationLink = `https://api.easthma.ca/verify-email?token=${token}`;
+            res.header('Access-Control-Allow-Origin', '*');
 
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
@@ -330,6 +329,7 @@ app.get('/get-pretest-answers', async (req, res) => {
   
 app.post('/get-session', async (req, res) => {
     const { email } = req.body;
+    res.header('Access-Control-Allow-Origin', '*'); 
 
     if (!email) {
         return res.status(400).json({ message: 'Email is required' });
