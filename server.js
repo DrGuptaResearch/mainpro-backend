@@ -338,7 +338,7 @@ app.post('/get-session', async (req, res) => {
     try {
         const session = await Session.findOne({ email });
         if ((session && session.verified && !session.completed)) {
-            return res.json({ sessionId: session.sessionId, completed: session.completed });
+            return res.json({ sessionId: session.sessionId });
         } else {
             return res.status(403).json({ message: 'Email not verified. Please verify your email to continue.' });
         }
