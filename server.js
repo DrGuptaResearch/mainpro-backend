@@ -17,9 +17,6 @@ const corsOptions = {
     credentials: true, // Include cookies/credentials if needed
 };
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
-
 // User Schema
 const sessionSchema = new mongoose.Schema({
     sessionId: { type: Number },
