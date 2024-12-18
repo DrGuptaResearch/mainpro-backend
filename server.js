@@ -10,15 +10,17 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 
-const corsOptions = {
-    origin: 'https://easthma.ca', 
-    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-};
+// const corsOptions = {
+//     origin: '*', 
+//     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true,
+// };
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions));
+
+app.use(cors())
 
 // User Schema
 const sessionSchema = new mongoose.Schema({
@@ -114,7 +116,6 @@ app.get('/get-posttest-answers', async (req, res) => {
 
 app.post('/send-verification', async (req, res) => {
     const { email } = req.body;
-    res.header('Access-Control-Allow-Origin', '*');
 
     if (!email) {
         return res.status(400).json({ message: 'Email is required' });
