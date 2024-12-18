@@ -146,11 +146,13 @@ app.post('/send-verification', async (req, res) => {
             if (!session.completed) {
                 return res.json({ message: 'Session already exists', sessionId: session.sessionId });
             } else {
+                console.log("made it to else statement")
                 session.completed = false;
                 session.preTest = false;
                 session.postTest = false;
                 session.sessionId = sessionId;
                 await session.save();
+                return;
             }
         } else {
             session = new Session({ email, token, verified: false, sessionId });
