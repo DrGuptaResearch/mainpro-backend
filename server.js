@@ -152,7 +152,7 @@ app.post('/send-verification', async (req, res) => {
                 session.postTest = false;
                 session.sessionId = sessionId;
                 await session.save();
-                return;
+                console.log("made it to the await session save")
             }
         } else {
             session = new Session({ email, token, verified: false, sessionId });
