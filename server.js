@@ -10,17 +10,15 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 
-// const corsOptions = {
-//     origin: '*', 
-//     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true,
-// };
+const corsOptions = {
+    origin: 'https://easthma.ca', // Make sure this matches your frontend domain exactly
+    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Include cookies/credentials if needed
+};
 
-// app.use(cors(corsOptions));
-// app.options('*', cors(corsOptions));
-
-app.use(cors())
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
 
 // User Schema
 const sessionSchema = new mongoose.Schema({
