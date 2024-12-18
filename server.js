@@ -20,6 +20,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://easthma.ca');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
+
 // User Schema
 const sessionSchema = new mongoose.Schema({
     sessionId: { type: Number },
@@ -113,6 +121,7 @@ app.get('/get-posttest-answers', async (req, res) => {
 
 
 app.post('/send-verification', async (req, res) => {
+    console.log("send verfication")
     const { email } = req.body;
 
     if (!email) {
@@ -327,6 +336,7 @@ app.get('/get-pretest-answers', async (req, res) => {
 
   
 app.post('/get-session', async (req, res) => {
+    console.log("get session")
     const { email } = req.body;
     res.header('Access-Control-Allow-Origin', '*'); 
 
