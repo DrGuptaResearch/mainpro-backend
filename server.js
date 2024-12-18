@@ -114,6 +114,7 @@ app.get('/get-posttest-answers', async (req, res) => {
 
 app.post('/send-verification', async (req, res) => {
     const { email } = req.body;
+    res.header('Access-Control-Allow-Origin', '*');
 
     if (!email) {
         return res.status(400).json({ message: 'Email is required' });
@@ -147,7 +148,6 @@ app.post('/send-verification', async (req, res) => {
             session = new Session({ email, token, verified: false, sessionId });
             await session.save();
             const verificationLink = `https://api.easthma.ca/verify-email?token=${token}`;
-            res.header('Access-Control-Allow-Origin', '*');
 
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
@@ -337,7 +337,7 @@ app.post('/get-session', async (req, res) => {
 
     try {
         const session = await Session.findOne({ email });
-        if ((session && session.verified)) {
+        if ((session && session.verified && !session.completed)) {
             return res.json({ sessionId: session.sessionId });
         } else {
             return res.status(403).json({ message: 'Email not verified. Please verify your email to continue.' });
