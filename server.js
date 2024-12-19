@@ -81,6 +81,22 @@ app.post('/submit-posttest', async (req, res) => {
     }
 });
 
+app.delete('/wipe-database', async (req, res) => {
+    try {
+        console.log('Wiping the database...');
+        const result = await Session.deleteMany({}); // This deletes all documents in the "Session" collection
+        console.log(`Deleted ${result.deletedCount} documents from the database.`);
+        res.json({
+            message: 'Database wiped successfully.',
+            deletedCount: result.deletedCount,
+        });
+    } catch (error) {
+        console.error('Error wiping the database:', error);
+        res.status(500).json({ message: 'Failed to wipe the database.', error: error.message });
+    }
+});
+
+
 
 app.get('/get-posttest-answers', async (req, res) => {
     const { sessionId } = req.query;
@@ -110,7 +126,7 @@ app.get('/get-posttest-answers', async (req, res) => {
 
 
 app.post('/send-verification', async (req, res) => {
-    console.log("send verfication")
+    console.log("send verification");
     const { email } = req.body;
 
     if (!email) {
@@ -135,43 +151,45 @@ app.post('/send-verification', async (req, res) => {
             if (!session.completed) {
                 return res.json({ message: 'Session already exists', sessionId: session.sessionId });
             } else {
-                console.log("made it to else statement")
+                console.log("made it to else statement");
                 session.completed = false;
                 session.preTest = false;
                 session.postTest = false;
                 session.sessionId = sessionId;
+
                 await session.save();
-                console.log("made it to the await session save")
+                console.log("made it to the await session save");
+
+                return res.json({ 
+                    message: 'Session reset for redo. You can start the pretest again.', 
+                    sessionId: session.sessionId 
+                });
             }
         } else {
             session = new Session({ email, token, verified: false, sessionId });
             await session.save();
-            const verificationLink = `https://api.easthma.ca/verify-email?token=${token}`;
 
+            const verificationLink = `https://api.easthma.ca/verify-email?token=${token}`;
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
                 to: email,
                 subject: 'Please Verify Your Email - CFP Mainpro+ Credits for The Electronic Asthma Management System (eAMS)',
                 html: `<p>Hello,</p>
     
-                <p> Thank you using the Electronic Asthma Management System learning activity. To verify your email and proceed with completing your pre-test, please click on the link below: </p>
+                <p>Thank you for using the Electronic Asthma Management System learning activity. To verify your email and proceed with completing your pre-test, please click on the link below:</p>
                 <a href="${verificationLink}">Verify Email</a> <br>
                 
-                <p>After completing the pre-test, we recommend reviewing the <a href="https://easthma.ca/mp_instructions#go1">linked articles</a> and interacting with the eAMS on a minimum of 5 patients before completing the <a href="https://easthma.ca/mp_instructions#go2">post-test</a> and evaluation form. You can earn up to 6 credits for a single application (estimated 2 hours, at 3 credits/hour), up to a maximum of 72 credits per year (e.g. if you repeat the activity monthly). You can learn more about this on our <a href="https://easthma.ca/mainpro">website</a>. </p>
-    
-                <p>If you have any questions or need any assistance, please let us know. <p>
-    
+                <p>If you have any questions, let us know.</p>
                 <p>Kind regards,</p>
                 <p>eAMS Support Team</p>
                 `
             });
-    
-            res.json({ message: 'Verification email sent. Please verify your email before proceeding.' });
-    
+
+            return res.json({ message: 'Verification email sent. Please verify your email before proceeding.' });
         }
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ message: 'Failed to send verification email' });
+        return res.status(500).json({ message: 'Failed to send verification email', error: error.message });
     }
 });
 
