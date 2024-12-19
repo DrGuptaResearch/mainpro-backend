@@ -160,7 +160,8 @@ app.post('/send-verification', async (req, res) => {
                 console.log("made it to the await session save")
                 return res.json({ 
                     message: 'Session reset for redo. You can start the pretest again.', 
-                    sessionId: session.sessionId 
+                    sessionId: session.sessionId,
+                    verified: session.verified
                 });
 
             }
