@@ -188,12 +188,12 @@ app.post('/send-verification', async (req, res) => {
                 `
             });
     
-            res.json({ message: 'Verification email sent. Please verify your email before proceeding.' });
+            res.json({ message: 'Verification email sent. Please verify your email before proceeding.', verified: session.verified });
     
         }
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ message: 'Failed to send verification email' });
+        res.status(500).json({ message: 'Failed to send verification email', verified: session.verified });
     }
 });
 
