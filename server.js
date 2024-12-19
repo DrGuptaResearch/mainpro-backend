@@ -137,7 +137,7 @@ app.post('/send-verification', async (req, res) => {
         let session = await Session.findOne({ email });
 
         if (session && session.verified && !session.completed) {
-            return res.json({ message: 'Session already exists', sessionId: session.sessionId });
+            return res.json({ message: 'Session already exists', sessionId: session.sessionId, verified: session.verified });
         }
 
         const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -149,7 +149,7 @@ app.post('/send-verification', async (req, res) => {
 
         if (session) {
             if (!session.completed) {
-                return res.json({ message: 'Session already exists', sessionId: session.sessionId });
+                return res.json({ message: 'Session already exists', sessionId: session.sessionId, verified: session.verified });
             } else {
                 console.log("made it to else statement")
                 session.completed = false;
